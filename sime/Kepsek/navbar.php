@@ -1,16 +1,14 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <div class="container-fluid justify-content-between">  
+  <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle sidebar">
       <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item d-flex">
-          <a class="nav-link logout-btn" href="#"> <img src="../img/Logout.png" alt="Logo" width="28" height="28">
-            LOGOUT</a>
-        </li>
-      </ul>
-    </div>
+  </button>
+  <!-- Logout button on the right -->
+  <li class="nav-item d-flex">
+      <a style="padding: 6px;" class="nav-link logout-btn" href="#">
+          <img src="../img/Logout.png" alt="Logout" width="28" height="28"> LOGOUT
+      </a>
+  </li>
   </div>
 </nav>

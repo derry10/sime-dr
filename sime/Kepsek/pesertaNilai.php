@@ -30,13 +30,14 @@
           <div class="profile-card" style="background-color: #A6A6A6;">
             <div class="container" style="background-color: #D9D9D9;"> 
               <!--Start Tabel prestasi -->
-              <div class="container p-4" >
+              <div class="container p-4 " >
                 <div class="container border-1 d-flex p-4" style="background-color: #797EFF; ">
                   <div class="col fw-bold">
                     <h2><u>LAPORAN PESERTA DAN NILAI </u></h2>
                     <h6>Ekstrakulikuler Pramuka <br> Pembina: Aisyah, S.Pd</h6>
                   </div>
                 </div>
+                <div class="table-responsive">
                 <table class="table table-bordered" style="background-color: #FFFFFF; border: 2px;">
                 <thead>
                   <tr style="background-color: #FFF455; text-align: center;">
@@ -70,6 +71,7 @@
                   </tr>
                 </tbody>
               </table> 
+              </div>
               </div>
             <!-- Finish Tabel prestasi -->
             <div class="modal-footer">
