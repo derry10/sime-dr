@@ -8,6 +8,8 @@
     .navbar {
       background-color: #A6A6A6;
     }
+
+        /* Optional: Hide the sidebar toggle button on larger screens if sidebar is always visible */
     .nav-link{
         background-color: #FF0000;
         color: white;
@@ -28,9 +30,33 @@
       padding-top: 3rem;
 
     }
+    @media (min-width: 768px) {
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            padding: 48px 0 0; /* Height of the navbar */
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        }
+        .btn-close-sidebar {
+            display: none; /* Hide close button on desktop views */
+        }
+    }
     .content {
       margin-left: 20%; /* Sesuaikan dengan lebar sidebar */
       padding: 2rem;
+    }
+    @media (max-width: 768px) {
+
+      .sidebar {
+            width: 100%;
+        }
+      .content {
+        margin-left: 0%; /* Sesuaikan dengan lebar sidebar */
+        padding: 0.2rem;
+      }
     }
     .profile-card {
       background-color: #D9D9D9;

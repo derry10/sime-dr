@@ -25,65 +25,67 @@
                   <!--Start Tabel prestasi -->
             <div class="container p-4" >
               <h5 class="modal-title justify-content-center fw-bold mb-4" >NAMA Peserta DAN NILAI</h5>
-              <table class="table table-bordered" style="background-color: #FFFFFF; border: 2px;">
-                <thead>
-                  <tr style="background-color: #FFF455; text-align: center;">
-                    <th scope="col">No</th>
-                    <th scope="col">Nama Ekskul</th>
-                    <th scope="col">Nama Peserta</th>
-                    <th scope="col">Kelas</th>
-                    <th scope="col">Jurusan</th>
-                    <th scope="col">Jenis Kelamin</th>
-                    <th scope="col">Nilai</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Hapus</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Pramuka</td>
-                    <td>Andriana</td>
-                    <td>11</td>
-                    <td>TBSM</td>
-                    <td>Pria</td>
-                    <td>85</td>
-                    <td>
-                      <div class="container d-flex justify-content-center align-items-center">           
-                         <a href="#" class="btn" style="background-color: #FFC700; color: #ffffff; border-radius: 7px;" data-bs-toggle="modal" data-bs-target="#opsiPengajuan">
-                         <img src="../img/editPutih.png" alt="img-edit" width="18" height="20"></a>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="container d-flex justify-content-center align-items-center">            
-                         <a href="#" class="btn" style="background-color: #AF0B00; color: #ffffff; border-radius: 7px;" data-bs-toggle="modal" data-bs-target="#opsiPengajuan">
-                         <img src="../img/hapus.png" alt="img-edit" width="18" height="20"></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Pramuka</td>
-                    <td>Diana</td>
-                    <td>10</td>
-                    <td>APAT</td>
-                    <td>Wanita</td>
-                    <td>85</td>
-                    <td>
-                      <div class="container d-flex justify-content-center align-items-center">            
-                         <a href="#" class="btn" style="background-color: #FFC700; color: #ffffff; border-radius: 7px;" data-bs-toggle="modal" data-bs-target="#opsiPengajuan">
-                         <img src="../img/editPutih.png" alt="img-edit" width="18" height="20"></a>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="container d-flex justify-content-center align-items-center">            
-                         <a href="#" class="btn" style="background-color: #AF0B00; color: #ffffff; border-radius: 7px;" data-bs-toggle="modal" data-bs-target="#opsiPengajuan">
-                         <img src="../img/hapus.png" alt="img-edit" width="18" height="20"></a>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>      
+              <div class="table-responsive">              
+                <table class="table table-bordered" style="background-color: #FFFFFF; border: 2px;">
+                  <thead>
+                    <tr style="background-color: #FFF455; text-align: center;">
+                      <th scope="col">No</th>
+                      <th scope="col">Nama Ekskul</th>
+                      <th scope="col">Nama Peserta</th>
+                      <th scope="col">Kelas</th>
+                      <th scope="col">Jurusan</th>
+                      <th scope="col">Jenis Kelamin</th>
+                      <th scope="col">Nilai</th>
+                      <th scope="col">Edit</th>
+                      <th scope="col">Hapus</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Pramuka</td>
+                      <td>Andriana</td>
+                      <td>11</td>
+                      <td>TBSM</td>
+                      <td>Pria</td>
+                      <td>85</td>
+                      <td>
+                        <div class="container d-flex justify-content-center align-items-center">           
+                          <a href="#" class="btn" style="background-color: #FFC700; color: #ffffff; border-radius: 7px;" data-bs-toggle="modal" data-bs-target="#opsiPengajuan">
+                          <img src="../img/editPutih.png" alt="img-edit" width="18" height="20"></a>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="container d-flex justify-content-center align-items-center">            
+                          <a href="#" class="btn" style="background-color: #AF0B00; color: #ffffff; border-radius: 7px;" data-bs-toggle="modal" data-bs-target="#opsiPengajuan">
+                          <img src="../img/hapus.png" alt="img-edit" width="18" height="20"></a>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Pramuka</td>
+                      <td>Diana</td>
+                      <td>10</td>
+                      <td>APAT</td>
+                      <td>Wanita</td>
+                      <td>85</td>
+                      <td>
+                        <div class="container d-flex justify-content-center align-items-center">            
+                          <a href="#" class="btn" style="background-color: #FFC700; color: #ffffff; border-radius: 7px;" data-bs-toggle="modal" data-bs-target="#opsiPengajuan">
+                          <img src="../img/editPutih.png" alt="img-edit" width="18" height="20"></a>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="container d-flex justify-content-center align-items-center">            
+                          <a href="#" class="btn" style="background-color: #AF0B00; color: #ffffff; border-radius: 7px;" data-bs-toggle="modal" data-bs-target="#opsiPengajuan">
+                          <img src="../img/hapus.png" alt="img-edit" width="18" height="20"></a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>  
+              </div>    
             </div>
             <!--Finish Tabel prestasi -->
           </div>
