@@ -1,0 +1,18 @@
+/* style.css */
+
+/* Atur lebar kontainer agar mengikuti lebar layar */
+.container {
+    width: 100%;
+    max-width: 500px; /* Maksimum lebar kontainer */
+}
+
+/* Atur margin top untuk judul agar lebih rapi */
+h2 {
+    margin-top: 0;
+}
+
+/* Atur margin bawah untuk elemen-elemen dalam form */
+.form-label,
+.card {
+    margin-bottom: 15px;
+}
