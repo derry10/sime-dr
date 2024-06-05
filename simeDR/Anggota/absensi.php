@@ -41,6 +41,19 @@ $stmt_ekskul->bind_param("i", $ekskul_id);
 $stmt_ekskul->execute();
 $result_ekskul = $stmt_ekskul->get_result();
 $ekskul = $result_ekskul->fetch_assoc();
+
+// Ambil data kegiatan yang memiliki kegiatan_id yang valid
+$query_kegiatan = "
+    SELECT k.id, k.nama_kegiatan, k.tanggal, a.status AS hadir, k.deskripsi 
+    FROM tb_kegiatan k
+    LEFT JOIN tb_absensi a ON k.id = a.kegiatan_id AND a.anggota_id = ?
+    WHERE k.ekskul_id = ? AND k.id IS NOT NULL"; // Menambahkan k.id IS NOT NULL
+$stmt_kegiatan = $koneksi->prepare($query_kegiatan);
+$stmt_kegiatan->bind_param("ii", $user_id, $ekskul_id);
+$stmt_kegiatan->execute();
+$result_kegiatan = $stmt_kegiatan->get_result();
+$kegiatan = $result_kegiatan->fetch_all(MYSQLI_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -82,6 +95,7 @@ $ekskul = $result_ekskul->fetch_assoc();
                     <th scope="col">Hadir</th>
                     <th scope="col">Deskripsi Kegiatan</th>
                     <th scope="col">Detail Absen</th>
+                    <th scope="col">Konfirmasi Kehadiran</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -110,20 +124,24 @@ $ekskul = $result_ekskul->fetch_assoc();
                       <td>
                         <div class="container d-flex justify-content-center align-items-center">
                           <a href="detailabsen.php?kegiatan_id=<?= $item['id'] ?>" class="btn btn-primary px-4 mx-3" style="background-color: #0094FF;">Detail</a>
-                          <!-- Tombol hadir -->
-                          <?php if ($item['hadir'] == null): ?>
-                            <form action="update_absensi.php" method="post">
-                              <input type="hidden" name="kegiatan_id" value="<?= $item['id'] ?>">
-                              <button type="submit" class="btn btn-success px-4 mx-3" name="hadir" value="hadir">Hadir</button>
-                            </form>
-                          <?php endif; ?>
                         </div>
                       </td>
+                      <td>
+                          <form action="konfirmasi_absen.php" method="post">
+                              <input type="hidden" name="kegiatan_id" value="<?= $item['id'] ?>">
+                              <?php if ($item['hadir'] == null): ?>
+                                  <button type="submit" class="btn btn-success" name="hadir" value="hadir">Hadir</button>
+                              <?php else: ?>
+                                  <button type="button" class="btn btn-success" disabled>Hadir</button>
+                              <?php endif; ?>
+                          </form>
+                      </td>
+
                     </tr>
                   <?php 
                       endforeach;
                   } else {
-                      echo "<tr><td colspan='6'>Tidak ada data kegiatan yang ditemukan.</td></tr>";
+                      echo "<tr><td colspan='7'>Tidak ada data kegiatan yang ditemukan.</td></tr>";
                   }
                   ?>
                 </tbody>
