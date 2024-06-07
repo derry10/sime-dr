@@ -44,16 +44,16 @@ $ekskul = $result_ekskul->fetch_assoc();
 
 // Ambil data kegiatan yang memiliki kegiatan_id yang valid
 $query_kegiatan = "
-    SELECT k.id, k.nama_kegiatan, k.tanggal, a.status AS hadir, k.deskripsi 
+    SELECT k.id, k.nama_kegiatan, k.tanggal, COUNT(a.status) AS jumlah_hadir, k.deskripsi, a.id AS absensi_id
     FROM tb_kegiatan k
-    LEFT JOIN tb_absensi a ON k.id = a.kegiatan_id AND a.anggota_id = ?
-    WHERE k.ekskul_id = ? AND k.id IS NOT NULL"; // Menambahkan k.id IS NOT NULL
+    LEFT JOIN tb_absensi a ON k.id = a.kegiatan_id
+    WHERE k.ekskul_id = ? AND k.id IS NOT NULL
+    GROUP BY k.id";
 $stmt_kegiatan = $koneksi->prepare($query_kegiatan);
-$stmt_kegiatan->bind_param("ii", $user_id, $ekskul_id);
+$stmt_kegiatan->bind_param("i", $ekskul_id);
 $stmt_kegiatan->execute();
 $result_kegiatan = $stmt_kegiatan->get_result();
 $kegiatan = $result_kegiatan->fetch_all(MYSQLI_ASSOC);
-
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +61,7 @@ $kegiatan = $result_kegiatan->fetch_all(MYSQLI_ASSOC);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Absensi</title>
+  <title>Absen</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -75,16 +75,16 @@ $kegiatan = $result_kegiatan->fetch_all(MYSQLI_ASSOC);
 
 <!-- Include Sidebar -->
 <?php include 'sidebar.php'; ?>
-<!-- Start Content -->
+<!-- Content -->
 <div class="content">
-  <div class="container justify-content-center">
+  <div class=" justify-content-center">
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="profile-card" style="background-color: #A6A6A6;">
-          <div class="container" style="background-color: #D9D9D9;">
-            <!-- Start Tabel kegiatan -->
-            <div class="container p-4">
-              <h2 class="modal-title justify-content-center fw-bold">ABSENSI KEGIATAN EKSTRAKULIKULER</h2>
+          <div style="background-color: #D9D9D9;">
+            <!-- Tabel kegiatan -->
+            <div class="p-4 table-responsive">
+            <h2 class="modal-title justify-content-center fw-bold">ABSENSI KEGIATAN EKSTRAKULIKULER</h2>
               <p class="modal-title justify-content-center fw-bold mb-4"><?= htmlspecialchars($ekskul['nama']) ?></p>
               <table class="table table-bordered" style="background-color: #FFFFFF; border: 2px;">
                 <thead>
@@ -92,7 +92,7 @@ $kegiatan = $result_kegiatan->fetch_all(MYSQLI_ASSOC);
                     <th scope="col">No</th>
                     <th scope="col">Nama Kegiatan</th>
                     <th scope="col">Tanggal</th>
-                    <th scope="col">Hadir</th>
+                    <th scope="col">Jumlah Hadir</th>
                     <th scope="col">Deskripsi Kegiatan</th>
                     <th scope="col">Detail Absen</th>
                     <th scope="col">Konfirmasi Kehadiran</th>
@@ -100,60 +100,34 @@ $kegiatan = $result_kegiatan->fetch_all(MYSQLI_ASSOC);
                 </thead>
                 <tbody>
                   <?php
-                  // Ambil data kegiatan dari tabel berdasarkan ekskul_id
-                  $query_kegiatan = "
-                      SELECT k.id, k.nama_kegiatan, k.tanggal, a.status as hadir, k.deskripsi 
-                      FROM tb_kegiatan k
-                      LEFT JOIN tb_absensi a ON k.id = a.kegiatan_id AND a.anggota_id = ?
-                      WHERE k.ekskul_id = ?";
-                  $stmt_kegiatan = $koneksi->prepare($query_kegiatan);
-                  $stmt_kegiatan->bind_param("ii", $user_id, $ekskul_id);
-                  $stmt_kegiatan->execute();
-                  $result_kegiatan = $stmt_kegiatan->get_result();
-                  $kegiatan = $result_kegiatan->fetch_all(MYSQLI_ASSOC);
-
-                  if (!empty($kegiatan)) {
-                      foreach ($kegiatan as $index => $item):
+                  // Loop through each kegiatan to display in the table
+                  foreach ($kegiatan as $index => $item):
                   ?>
-                    <tr>
-                      <th scope="row"><?= $index + 1 ?></th>
-                      <td><?= htmlspecialchars($item['nama_kegiatan']) ?></td>
-                      <td><?= htmlspecialchars($item['tanggal']) ?></td>
-                      <td><?= htmlspecialchars($item['hadir'] == 'present' ? 'Ya' : 'Tidak') ?></td>
-                      <td><?= htmlspecialchars($item['deskripsi']) ?></td>
-                      <td>
+                  <tr>
+                    <th scope="row"><?= $index + 1 ?></th>
+                    <td><?= htmlspecialchars($item['nama_kegiatan']) ?></td>
+                    <td><?= htmlspecialchars($item['tanggal']) ?></td>
+                    <td><?= htmlspecialchars($item['jumlah_hadir']) ?></td>
+                    <td><?= htmlspecialchars($item['deskripsi']) ?></td>
+                    <td>
+                      <div class="container d-flex justify-content-center align-items-center">
+                        <a href="detailabsen.php?kegiatan_id=<?= $item['id'] ?>" class="btn btn-primary px-4 mx-3" style="background-color: #0094FF;">Detail</a>
+                      </div>
+                    </td>
+                    <td>
                         <div class="container d-flex justify-content-center align-items-center">
-                          <a href="detailabsen.php?kegiatan_id=<?= $item['id'] ?>" class="btn btn-primary px-4 mx-3" style="background-color: #0094FF;">Detail</a>
+                            <button class="btn btn-success px-4 mx-3 confirm-attendance" data-kegiatan-id="<?= $item['id'] ?>">Konfirmasi Kehadiran</button>
                         </div>
-                      </td>
-                      <td>
-                          <form action="konfirmasi_absen.php" method="post">
-                              <input type="hidden" name="kegiatan_id" value="<?= $item['id'] ?>">
-                              <?php if ($item['hadir'] == null): ?>
-                                  <button type="submit" class="btn btn-success" name="hadir" value="hadir">Hadir</button>
-                              <?php else: ?>
-                                  <button type="button" class="btn btn-success" disabled>Hadir</button>
-                              <?php endif; ?>
-                          </form>
-                      </td>
-
-                    </tr>
+                    </td>
+                  </tr>
                   <?php 
-                      endforeach;
-                  } else {
-                      echo "<tr><td colspan='7'>Tidak ada data kegiatan yang ditemukan.</td></tr>";
-                  }
+                  endforeach;
                   ?>
                 </tbody>
               </table>
             </div>
-            <!-- Finish Tabel kegiatan -->
-            <div class="modal-footer"></div>
           </div>
           <div class="modal-footer">
-            <a href="#" class="btn px-4 mt-4" style="background-color: #FFC700; color: #373737; border-radius: 7px;">
-              <b>Laporkan</b>
-            </a>
           </div>
         </div>
       </div>
@@ -164,6 +138,49 @@ $kegiatan = $result_kegiatan->fetch_all(MYSQLI_ASSOC);
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.confirm-attendance').click(function() {
+            var button = $(this); // Memilih tombol yang diklik
+            var kegiatan_id = button.data('kegiatan-id');
+            var sudahAbsen = button.data('sudah-absen'); // Mengecek apakah tombol sudah diklik sebelumnya
+            
+            // Jika tombol sudah diklik sebelumnya, maka tidak lakukan apa-apa
+            if (sudahAbsen) {
+                return;
+            }
+
+            $.ajax({
+                url: 'update_absensi.php', // PHP script to handle the update
+                method: 'POST',
+                data: { kegiatan_id: kegiatan_id },
+                success: function(response) {
+                    // Handle success, show a success message
+                    alert('Kehadiran berhasil dikonfirmasi!');
+                    // Mengubah teks tombol menjadi "Sudah Absen"
+                    button.text('Sudah Absen');
+                    // Menonaktifkan tombol dengan mengubah kelas dan properti
+                    button.removeClass('btn-success').addClass('btn-secondary').prop('disabled', true);
+                    // Mengatur atribut data bahwa tombol sudah diklik
+                    button.data('sudah-absen', true);
+                },
+                error: function(xhr, status, error) {
+                    // Handle error, show an error message
+                    alert('Gagal mengkonfirmasi kehadiran. Silakan coba lagi.');
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
 </body>
 </html>
 
